@@ -1,0 +1,61 @@
+﻿>crt:03    ThisHost   MAVUS   10.66.10.11 327
+********************************************************************
+*>crt:uio  name_clu  name_obj  ip_host  num_port  SZ_pack time  rept
+*-------------------------------------------------------------------
+>crt:      ThatHost   SERSTOP    10.66.10.11  533     0     4    3
+*!!!!!!!!!!!!!!!!!!!! Хост Службы-Администратора. Не опрашивается !!!!
+>crt:      ThatHost   HOSTADM   10.66.10.11  252    0     4    3
+*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*****************************USERS***********************************
+>crt:      ThatHost   HSTU001   10.214.21.182     5      1000 4    5
+>crt:      ThatHost   HSTU003   10.214.16.81     5      1000 4    5
+>crt:      ThatHost   HSTU004   10.214.19.140     5      1000 4    5
+>crt:      ThatHost   HSTU005   10.214.17.139     5      1000 4    5
+>crt:      ThatHost   HSTU006   10.214.17.181     5      1000 4    5
+>crt:      ThatHost   HSTU007   10.214.18.252     5      1000 4    5
+>crt:      ThatHost   HSTU008   10.222.2.60       5      1000 4    5
+>crt:      ThatHost   HSTU009   10.222.10.112     5      1000 4    5
+>crt:      ThatHost   HSTU010   10.222.8.42       5      1000 4    5
+>crt:      ThatHost   HSTU011   10.222.11.211     5      1000 4    5
+>crt:      ThatHost   HSTU012   10.222.10.150     5      1000 4    5
+>crt:      ThatHost   HSTU013   10.222.9.18       5      1000 4    5
+>crt:      ThatHost   HSTU014   10.222.9.56       5      1000 4    5
+>crt:      ThatHost   HSTU015   10.222.8.156     5      1000 4    5
+>crt:      ThatHost   HSTU016   10.222.11.12      5      1000 4    5
+>crt:      ThatHost   HSTU017   10.222.8.24       5      1000 4    5
+>crt:      ThatHost   HSTU018   10.222.40.16      5      1000 4    5
+>crt:      ThatHost   HSTU019   10.222.11.27      5      1000 4    5
+>crt:      ThatHost   HSTU020   10.214.4.29       5      1000 4    5
+>crt:      ThatHost   HSTU021   10.214.36.197     5      1000 4    5
+>crt:      ThatHost   HSTU022   10.222.8.185      5      1000 4    5
+>crt:      ThatHost   HSTU023   10.222.9.216      5      1000 4    5
+>crt:      ThatHost   HSTU024   10.214.4.251      5      1000 4    5
+>crt:      ThatHost   HSTU025   200.42.1.41       5      1000 4    5
+>crt:      ThatHost   HSTU026   200.42.1.40       5      1000 4    5
+>crt:      ThatHost   HSTU027   200.42.1.39       5      1000 4    5
+>crt:      ThatHost   HSTU028   10.222.9.230      5      1000 4    5
+>crt:      ThatHost   HSTU029   10.162.17.173     5      1000 4    5
+>crt:      ThatHost   HSTU030   10.162.17.170     5      1000 4    5
+>crt:      ThatHost   HSTU031   10.162.17.169     5      1000 4    5
+>crt:      ThatHost   HSTU032	10.214.25.63	  5      1000 4    5
+>crt:      ThatHost   HSTU033	10.214.4.236	  5      1000 4    5
+>crt:      ThatHost   HSTU034	10.214.4.10	  5      1000 4    5
+>crt:      ThatHost   HSTU035	10.214.4.229	  5      1000 4    5
+>crt:      ThatHost   HSTU036	10.214.25.212	  5      1000 4    5
+>crt:      ThatHost   HSTU037	10.214.20.151	  5      1000 4    5
+>crt:      ThatHost   HSTU038	10.214.16.62	  5      1000 4    5
+>crt:      ThatHost   HSTU039	10.214.4.154	  5      1000 4    5
+>crt:      ThatHost   HSTU040	10.214.4.242	  5      1000 4    5
+>crt:      ThatHost   HSTU041	10.222.9.37	  5      1000 4    5
+>crt:      ThatHost   HSTU041   10.34.21.67      5      1000 4    5
+>crt:      ThatHost   HSTU042   10.10.10.10      5      1000 4    5
+>crt:      ThatHost   HSTU043   10.56.78.100      5      1000 4    5
+>crt:      ThatHost   HSTU044   10.90.90.90      5      1000 4    5
+>crt:      ThatHost   HSTU045   10.1.1.1      5      1000 4    5
+>crt:      ThatHost   HSTU046   10.1.1.2      5      1000 4    5
+*********************************************************************
+>crt:18    orcdb    OPERSRV   0040 0040 0   c:\mon\ DUMMY
+>crt:    iovbtrn    DIALOG   0040 327
+>dbg:OPERSRV VAV1
+>dbg:OPERSRV VAV2
+>exit
