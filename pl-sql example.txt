@@ -1,0 +1,227 @@
+ declare
+
+doc varchar2(30):='&ДУЛ';
+
+ac_number varchar2(30):='&Номер_счета';
+
+c_number varchar2(30):='&Номер_карты';
+
+ 
+
+card_exp date:=to_date('&Срок_действия','mm.yyyy');
+
+ 
+
+crd_month varchar2(30);
+
+crd_year varchar2(30);
+
+length_year varchar2(30);
+
+last_day_of_month varchar2(30);
+
+mod_num varchar2(30);
+
+mod_year_num varchar2(30);
+
+ 
+
+doc_exist integer;
+
+ 
+
+contract_number varchar2(30);
+
+account_id varchar2(30);
+
+contract_id varchar2(30);
+
+check_card_type varchar2(30);
+
+check_param_card varchar2(30);
+
+tarifs spoobk.tbl_param_card%ROWTYPE;
+
+ 
+
+begin
+
+  select count(d.id) into doc_exist from spoobk.document d where d.series_number = doc; 
+
+  if(doc_exist!=0) then 
+
+    if (length(trim(ac_number))=20) then   
+
+     select id, contract_number into account_id,contract_number from table(W4_TAB.F_OWS_ACNT_CONTRACT(null,null,null,ac_number))
+
+     where con_cat='A' and amnd_state='A';
+
+     if (length(trim(c_number))=16) then
+
+        select id into contract_id from table(W4_TAB.F_OWS_ACNT_CONTRACT(null,c_number,null,null))
+
+        where amnd_state='A';
+
+     else dbms_output.put_line('Неверный формат номера карты!');
+
+     rollback;
+
+  end if;
+
+  else dbms_output.put_line('Неверный формат счета!');
+
+  rollback; 
+
+  end if;
+
+ 
+
+  select extract(month from card_exp) into crd_month from dual;
+
+  select extract(year from card_exp) into crd_year from dual;
+
+  select length(to_char(crd_year)) into length_year from dual;
+
+  select mod(crd_year,4) into mod_num from dual;
+
+  select mod(crd_year,100) into mod_year_num from dual;
+
+  if(length_year>=4) then
+
+      if(crd_month!='2') then
+
+        select decode(crd_month,'1','31',
+
+              '3','31',
+
+              '4','30',
+
+              '5','31',
+
+              '6','30',
+
+              '7','31',
+
+              '8','31',
+
+              '9','30',
+
+              '10','31',
+
+              '11','30',
+
+              '12','31','Неверный формат месяца'
+
+             ) result into last_day_of_month from dual;
+
+      elsif(mod_num=0) then
+
+         if(mod_year_num=0) then
+
+           select 28 into last_day_of_month from dual;       
+
+         else select 29 into last_day_of_month from dual;
+
+         end if;
+
+      elsif(mod_num!=0) then
+
+        select 28 into last_day_of_month from dual;        
+
+      end if;      
+
+  else dbms_output.put_line('Неверный формат года!');                                     
+
+  end if;
+
+ 
+
+  select t.fc_param_card_id, t.fc_card_type into check_param_card, check_card_type from spoobk.credit_card_form t
+
+  where t.client_id in (select  c.id from spoobk.client c where c.document_id in
+
+  (select d.id from spoobk.document d where d.series_number = doc)) and t.closed=0;
+
+ 
+
+  select * into tarifs from spoobk.tbl_param_card where id = check_param_card;
+
+ 
+
+  if(tarifs.id!= check_param_card or tarifs.card_type!=check_card_type) then
+
+    dbms_output.put_line('Неверный ТП!');
+
+    rollback;
+
+  else
+
+   
+
+    update spoobk.credit_card_form ct set
+
+ 
+
+    ct.agreement_number = contract_number,
+
+    ct.card_number = c_number,
+
+    ct.CARD_EXP_DATE = to_date((last_day_of_month||'.'||to_char(card_exp,'mm.yyyy')),'dd.mm.yyyy'),
+
+    ct.card_contract_id = contract_id,
+
+    ct.card_type = ct.fc_card_type,
+
+    ct.fc_card_type = null,
+
+    ct.fc_emboss_name = null,
+
+    ct.account_number = ac_number,
+
+    ct.account_contract_id = account_id,
+
+    ct.unclaimed_card_number = null,
+
+    ct.fissue_date = null,
+
+    ct.retd_card_type = null,
+
+    ct.retd_card_number = null,
+
+    ct.param_card_id = ct.fc_param_card_id,
+
+    ct.fc_param_card_id = null,
+
+    ct.not_fulfilled = 0
+
+      
+
+    where ct.client_id in
+
+    (select  c.id from spoobk.client c where c.document_id in
+
+    (select d.id from spoobk.document d where d.series_number = doc))
+
+    and ct.closed = 0;
+
+    commit;
+
+    dbms_output.put_line('Данные по ДУЛ '||doc||' скорректированы.');  
+
+  end if;
+
+  else  dbms_output.put_line('Указанный ДУЛ '||doc||' не найден!');
+
+  rollback;
+
+  end if;
+
+exception
+
+  when no_data_found then
+
+    dbms_output.put_line('Данные не найдены!');
+
+    rollback;
+
+end;
